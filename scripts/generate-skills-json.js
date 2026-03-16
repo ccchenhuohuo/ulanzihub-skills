@@ -6,9 +6,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SKILLS_DIR = path.join(__dirname, '../skills');
 
 /**
- * 读取目录下的所有文件
+ * 递归读取目录下所有文件
  */
-function readDirRecursive(dir, basePath = '') {
+function readDirRecursive(dir) {
   const result = {};
 
   if (!fs.existsSync(dir)) {
@@ -19,11 +19,10 @@ function readDirRecursive(dir, basePath = '') {
 
   for (const item of items) {
     const fullPath = path.join(dir, item);
-    const relativePath = basePath ? `${basePath}/${item}` : item;
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
-      result[item] = readDirRecursive(fullPath, relativePath);
+      result[item] = readDirRecursive(fullPath);
     } else {
       result[item] = fs.readFileSync(fullPath, 'utf-8');
     }
@@ -40,7 +39,7 @@ function parseSkill(skillDir) {
 
   // 检查 SKILL.md 是否存在
   if (!fs.existsSync(path.join(skillPath, 'SKILL.md'))) {
-    console.warn(`⚠️  ${skillDir}: 缺少 SKILL.md，跳过`);
+    console.warn(`Skip ${skillDir}: no SKILL.md`);
     return null;
   }
 
@@ -61,27 +60,22 @@ function parseSkill(skillDir) {
   const skillMd = files['SKILL.md'] || '';
 
   // 解析 YAML frontmatter
-  const frontmatterMatch = skillMd.match(/^---
-([\s\S]*?)\n---/);
+  const frontmatterMatch = skillMd.match(/^---([\s\S]*?)---/m);
   if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
+    const lines = frontmatterMatch[1].split('\n');
+    for (const line of lines) {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex === -1) continue;
+      const key = line.slice(0, colonIndex).trim();
+      const value = line.slice(colonIndex + 1).trim();
 
-    const nameMatch = frontmatter.match(/name:\s*(.+)/);
-    const descMatch = frontmatter.match(/description:\s*(.+)/);
-    const versionMatch = frontmatter.match(/version:\s*(.+)/);
-    const authorMatch = frontmatter.match(/author:\s*(.+)/);
-    const tagsMatch = frontmatter.match(/tags:\s*\[(.*)\]/);
-    const platformsMatch = frontmatter.match(/platforms:\s*\n\s*-\s*(.+)/g);
-
-    if (nameMatch) metadata.name = nameMatch[1].trim();
-    if (descMatch) metadata.description = descMatch[1].trim();
-    if (versionMatch) metadata.version = versionMatch[1].trim();
-    if (authorMatch) metadata.author = authorMatch[1].trim();
-    if (tagsMatch) {
-      metadata.tags = tagsMatch[1].split(',').map(t => t.trim());
-    }
-    if (platformsMatch) {
-      metadata.platforms = platformsMatch.map(p => p.replace(/platforms:\s*\n\s*-\s*/, '').trim());
+      if (key === 'name') metadata.name = value;
+      if (key === 'description') metadata.description = value;
+      if (key === 'version') metadata.version = value;
+      if (key === 'author') metadata.author = value;
+      if (key === 'tags') {
+        metadata.tags = value.replace(/[\[\]]/g, '').split(',').map(t => t.trim()).filter(t => t);
+      }
     }
 
     // 设置 displayName
@@ -102,10 +96,10 @@ function parseSkill(skillDir) {
  * 生成 skills.json
  */
 function generateSkillsJson() {
-  console.log('🔍 扫描 skills 目录...\n');
+  console.log('🔍 Scanning skills directory...\n');
 
   if (!fs.existsSync(SKILLS_DIR)) {
-    console.error('❌ skills 目录不存在');
+    console.error('❌ skills directory not found');
     process.exit(1);
   }
 
@@ -115,7 +109,7 @@ function generateSkillsJson() {
       return fs.statSync(skillPath).isDirectory();
     });
 
-  console.log(`📁 找到 ${skillDirs.length} 个技能目录\n`);
+  console.log(`📁 Found ${skillDirs.length} skills\n`);
 
   const skills = [];
 
@@ -148,7 +142,7 @@ function generateSkillsJson() {
     JSON.stringify(output, null, 2)
   );
 
-  console.log(`\n🎉 已生成 skills.json，包含 ${skills.length} 个技能`);
+  console.log(`\n🎉 Generated skills.json with ${skills.length} skills`);
 }
 
 generateSkillsJson();
