@@ -17,6 +17,13 @@ export ARK_API_KEY="你的-api-key"
 
 **基础 URL**: `https://ark.cn-beijing.volces.com/api/v3`
 
+## 环境变量
+
+| 变量名 | 说明 |
+|--------|------|
+| `ARK_API_KEY` | 火山引擎 API Key（必填） |
+| `SEEDANCE_OUTPUT_DIR` | 视频输出目录（可选，默认 `~/Downloads/seedance`） |
+
 ## 支持的型号
 
 | 型号 | Model ID | 能力 |
@@ -35,44 +42,46 @@ export ARK_API_KEY="你的-api-key"
 
 提供了一个 Python CLI 工具 `seedance.py`，具有完善的错误处理、自动重试和本地图片 base64 转换功能。**建议使用此工具而非原始 curl 命令。**
 
+> 脚本会自动获取自身位置，无论 skill 安装在哪个目录都能正常运行。
+
 ### 快速示例
 
 ```bash
-# 文生视频（创建 + 等待 + 下载）- 保存到 video_generate 文件夹
-python3 {baseDir}/scripts/seedance.py create --prompt "小猫对着镜头打哈欠" --wait --download /root/.openclaw/workspace-artemis/video_generate
+# 文生视频（创建 + 等待 + 下载）- 保存到 ~/Downloads/seedance
+python3 scripts/seedance.py create --prompt "小猫对着镜头打哈欠" --wait --download
 
 # 本地图生视频
-python3 {baseDir}/scripts/seedance.py create --prompt "人物缓缓转头微笑" --image /path/to/photo.jpg --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "人物缓缓转头微笑" --image /path/to/photo.jpg --wait --download
 
 # URL 图生视频
-python3 {baseDir}/scripts/seedance.py create --prompt "风景画面缓缓推进" --image "https://example.com/image.jpg" --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "风景画面缓缓推进" --image "https://example.com/image.jpg" --wait --download
 
 # 首帧 + 尾帧
-python3 {baseDir}/scripts/seedance.py create --prompt "花朵从含苞到盛开" --image first.jpg --last-frame last.jpg --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "花朵从含苞到盛开" --image first.jpg --last-frame last.jpg --wait --download
 
 # 参考图（Lite I2V）
-python3 {baseDir}/scripts/seedance.py create --prompt "[图1]的人物在跳舞" --ref-images ref1.jpg ref2.jpg --model doubao-seedance-1-0-lite-i2v-250219 --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "[图1]的人物在跳舞" --ref-images ref1.jpg ref2.jpg --model doubao-seedance-1-0-lite-i2v-250219 --wait --download
 
 # 自定义参数
-python3 {baseDir}/scripts/seedance.py create --prompt "城市夜景延时摄影" --ratio 21:9 --duration 8 --resolution 1080p --generate-audio false --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "城市夜景延时摄影" --ratio 21:9 --duration 8 --resolution 1080p --generate-audio false --wait --download
 
 # 草稿模式（便宜预览）
-python3 {baseDir}/scripts/seedance.py create --prompt "海浪拍打沙滩" --draft true --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --prompt "海浪拍打沙滩" --draft true --wait --download
 
 # 从草稿生成正式视频
-python3 {baseDir}/scripts/seedance.py create --draft-task-id <DRAFT_TASK_ID> --resolution 720p --wait --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py create --draft-task-id <DRAFT_TASK_ID> --resolution 720p --wait --download
 
 # 查询任务状态
-python3 {baseDir}/scripts/seedance.py status <TASK_ID>
+python3 scripts/seedance.py status <TASK_ID>
 
 # 等待已有任务
-python3 {baseDir}/scripts/seedance.py wait <TASK_ID> --download /root/.openclaw/workspace-artemis/video_generate
+python3 scripts/seedance.py wait <TASK_ID> --download
 
 # 列出任务
-python3 {baseDir}/scripts/seedance.py list --status succeeded
+python3 scripts/seedance.py list --status succeeded
 
 # 删除/取消任务
-python3 {baseDir}/scripts/seedance.py delete <TASK_ID>
+python3 scripts/seedance.py delete <TASK_ID>
 ```
 
 ## 常用参数
@@ -90,7 +99,7 @@ python3 {baseDir}/scripts/seedance.py delete <TASK_ID>
 | `--generate-audio` | 是否生成音频 | `true` (仅 1.5 Pro) |
 | `--draft` | 草稿模式 | `false` |
 | `--wait` | 等待生成完成 | - |
-| `--download` | 下载保存路径 | - |
+| `--download` | 下载保存路径（默认 `~/Downloads/seedance`） | - |
 
 完整参数说明见 [references/parameters.md](references/parameters.md)。
 

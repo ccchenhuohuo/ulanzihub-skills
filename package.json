@@ -1,6 +1,6 @@
 {
   "name": "ulanzihub-skills",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "优篮子内部技能库 - Claude Code & OpenClaw 通用",
   "main": "index.js",
   "type": "module",

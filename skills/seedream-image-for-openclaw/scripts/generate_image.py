@@ -14,6 +14,13 @@ import requests
 import tempfile
 import uuid
 
+# 获取脚本自身所在目录（兼容 uv run 和直接运行）
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else os.getcwd()
+SKILL_DIR = os.path.dirname(SCRIPT_DIR)  # skill 根目录
+
+# 默认输出目录（兼容不同部署环境）
+DEFAULT_OUTPUT_DIR = os.environ.get("SEEDREAM_OUTPUT_DIR", os.path.expanduser("~/Downloads/seedream"))
+
 
 def generate_image(prompt, model, size, api_key, image_input=None, sequential=False, max_images=1):
     url = "https://ark.cn-beijing.volces.com/api/v3/images/generations"
@@ -38,21 +45,25 @@ def generate_image(prompt, model, size, api_key, image_input=None, sequential=Fa
         payload["sequential_image_generation"] = "disabled"
 
     try:
-        response = requests.post(url, headers=headers, json=payload)
+        # 添加超时设置，防止请求无限等待
+        response = requests.post(url, headers=headers, json=payload, timeout=60)
         response.raise_for_status()
         result = response.json()
-        
+
         if "data" in result and len(result["data"]) > 0:
             for item in result["data"]:
                 if "url" in item:
                     image_url = item['url']
                     # 自动下载图片到本地
                     print(f"正在下载图片...", file=sys.stderr)
-                    img_response = requests.get(image_url)
+                    img_response = requests.get(image_url, timeout=60)
                     img_response.raise_for_status()
-                    
-                    # 保存到本地文件（image_generate 文件夹）
-                    local_path = f"/root/.openclaw/workspace-artemis/image_generate/seedream_{uuid.uuid4().hex[:8]}.jpg"
+
+                    # 确保输出目录存在
+                    os.makedirs(DEFAULT_OUTPUT_DIR, exist_ok=True)
+
+                    # 保存到本地文件
+                    local_path = f"{DEFAULT_OUTPUT_DIR}/seedream_{uuid.uuid4().hex[:8]}.jpg"
                     with open(local_path, 'wb') as f:
                         f.write(img_response.content)
                     

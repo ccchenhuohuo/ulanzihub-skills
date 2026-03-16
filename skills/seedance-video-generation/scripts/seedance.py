@@ -17,12 +17,20 @@ import argparse
 import base64
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.request
 import urllib.error
 from pathlib import Path
 
+
+# 获取脚本自身所在目录（兼容 uv run 和直接运行）
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else os.getcwd()
+SKILL_DIR = os.path.dirname(SCRIPT_DIR)  # skill 根目录
+
+# 默认输出目录（兼容不同部署环境，可通过环境变量覆盖）
+DEFAULT_OUTPUT_DIR = os.environ.get("SEEDANCE_OUTPUT_DIR", os.path.expanduser("~/Downloads/seedance"))
 
 BASE_URL = "https://ark.cn-beijing.volces.com/api/v3/contents/generations/tasks"
 DEFAULT_MODEL = "doubao-seedance-1-5-pro-251215"
@@ -227,7 +235,7 @@ def cmd_wait_logic(task_id, interval=15, download_dir=None):
 
                     # Open on macOS
                     if sys.platform == "darwin":
-                        os.system(f'open "{filepath}"')
+                        subprocess.run(["open", str(filepath)], check=True)
                 except Exception as e:
                     print(f"Download failed: {e}", file=sys.stderr)
 
@@ -316,7 +324,7 @@ def main():
     p_create.add_argument("--service-tier", choices=["default", "flex"], help="Service tier")
     p_create.add_argument("--wait", "-w", action="store_true", help="Wait for completion after creating")
     p_create.add_argument("--interval", type=int, default=15, help="Poll interval in seconds (default: 15)")
-    p_create.add_argument("--download", help="Download directory (e.g. ~/Desktop)")
+    p_create.add_argument("--download", nargs="?", const=DEFAULT_OUTPUT_DIR, help="Download directory (default: ~/Downloads/seedance)")
 
     # status
     p_status = subparsers.add_parser("status", help="Query task status")
@@ -326,7 +334,7 @@ def main():
     p_wait = subparsers.add_parser("wait", help="Wait for task completion")
     p_wait.add_argument("task_id", help="Task ID to wait for")
     p_wait.add_argument("--interval", type=int, default=15, help="Poll interval in seconds (default: 15)")
-    p_wait.add_argument("--download", help="Download directory (e.g. ~/Desktop)")
+    p_wait.add_argument("--download", nargs="?", const=DEFAULT_OUTPUT_DIR, help="Download directory (default: ~/Downloads/seedance)")
 
     # list
     p_list = subparsers.add_parser("list", help="List video generation tasks")

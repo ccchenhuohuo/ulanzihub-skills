@@ -10,6 +10,7 @@
 import argparse
 import os
 import sys
+import uuid
 from datetime import timedelta
 from qcloud_cos import CosConfig
 from qcloud_cos import CosS3Client
@@ -34,21 +35,22 @@ def upload_to_cos(
     if not all([secret_id, secret_key, region, bucket]):
         raise ValueError("请配置环境变量: TENCENT_COS_SECRET_ID, TENCENT_COS_SECRET_KEY, TENCENT_COS_REGION, TENCENT_COS_BUCKET")
     
-    # 初始化 COS 客户端
+    # 初始化 COS 客户端（添加超时设置）
     config = CosConfig(
         SecretId=secret_id,
         SecretKey=secret_key,
-        Region=region
+        Region=region,
+        ConnectTimeout=30,  # 连接超时 30 秒
+        ReadWriteTimeout=60  # 读写超时 60 秒
     )
     client = CosS3Client(config)
     
     # 检查文件是否存在
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"文件不存在: {file_path}")
-    
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"文件不存在或不是有效文件: {file_path}")
+
     # 生成唯一文件名
     filename = os.path.basename(file_path)
-    import uuid
     key = f"artemis/{uuid.uuid4().hex}_{filename}"
     
     # 上传文件
