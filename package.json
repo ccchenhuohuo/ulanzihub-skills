@@ -1,0 +1,45 @@
+{
+  "name": "ulanzihub-skills",
+  "version": "1.0.0",
+  "description": "优篮子内部技能库 - Claude Code & OpenClaw 通用",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccchenhuohuo/ulanzihub-skills.git"
+  },
+  "keywords": [
+    "claude-code",
+    "openclaw",
+    "skills",
+    "ulanzi"
+  ],
+  "author": "Ulanzi Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ccchenhuohuo/ulanzihub-skills/issues"
+  },
+  "homepage": "https://github.com/ccchenhuohuo/ulanzihub-skills#readme",
+  "agentskills": {
+    "skills": [
+      {
+        "name": "company-code-review",
+        "path": "./skills/company-code-review",
+        "description": "按照公司代码规范审查代码"
+      },
+      {
+        "name": "company-docs",
+        "path": "./skills/company-docs",
+        "description": "查询公司内部文档和流程"
+      },
+      {
+        "name": "feishu-bot",
+        "path": "./skills/feishu-bot",
+        "description": "开发飞书机器人和集成应用"
+      }
+    ]
+  },
+  "files": [
+    "skills"
+  ]
+}
