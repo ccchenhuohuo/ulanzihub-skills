@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-03-16T02:52:01.985Z",
+  "source": {
+    "type": "npm",
+    "name": "ulanzihub-skills",
+    "registry": "https://registry.npmjs.org",
+    "repository": "https://github.com/ccchenhuohuo/ulanzihub-skills"
+  },
+  "skills": [
+    {
+      "id": "ulanzi/company-code-review",
+      "name": "company-code-review",
+      "displayName": "Company Code Review",
+      "description": "按照公司代码规范审查代码，支持中文注释和命名规范。当用户要求审查代码、使用公司规范、检查代码质量时使用此技能。",
+      "author": "ulanzi",
+      "version": "1.0.0",
+      "tags": [
+        "code-review",
+        "internal",
+        "cn"
+      ],
+      "platforms": [
+        "claude-code",
+        "openclaw"
+      ],
+      "files": {
+        "SKILL.md": "---\nname: company-code-review\ndescription: 按照公司代码规范审查代码，支持中文注释和命名规范。当用户要求审查代码、使用公司规范、检查代码质量时使用此技能。\nversion: 1.0.0\nauthor: ulanzi\ntags: [code-review, internal, cn]\nplatforms:\n  - claude-code\n  - openclaw\n---\n\n# 公司代码规范审查\n\n按照优篮子公司的代码规范审查代码，确保代码质量。\n\n## 适用场景\n\n- 用户要求审查代码\n- 用户要求检查代码质量\n- 用户要求使用公司规范\n- 代码提交前检查\n\n## 审查要点\n\n### 1. 命名规范\n\n- 变量/函数使用小驼峰命名\n- 类名使用大驼峰命名\n- 常量使用全大写下划线\n- 中文注释要准确表达意图\n\n### 2. 代码结构\n\n- 函数单一职责\n- 适当提取公共逻辑\n- 避免重复代码\n- 保持代码简洁\n\n### 3. 注释要求\n\n- 公共 API 必须有注释\n- 复杂逻辑必须解释\n- 中文注释优先\n- TODO 需要标注负责人\n\n### 4. 错误处理\n\n- 必须处理异常\n- 错误信息要友好\n- 关键操作需要日志\n\n## 输出格式\n\n审查完成后，输出以下格式：\n\n```markdown\n## 审查结果\n\n### 通过 ✅\n- [x] 命名规范\n- [x] 代码结构\n\n### 待改进 ⚠️\n- [ ] 文件: src/utils.js:15 - 变量命名不够清晰\n\n### 建议 💡\n- 建议为函数添加 JSDoc 注释\n```\n",
+        "_meta.json": "{\n  \"ownerId\": \"ulanzi\",\n  \"slug\": \"company-code-review\",\n  \"version\": \"1.0.0\",\n  \"publishedAt\": 1700000000000,\n  \"homepage\": \"https://github.com/ccchenhuohuo/ulanzihub-skills\",\n  \"license\": \"MIT\"\n}\n"
+      }
+    },
+    {
+      "id": "ulanzi/company-docs",
+      "name": "company-docs",
+      "displayName": "Company Docs",
+      "description": "查询公司内部文档和流程，包括HR、财务、研发流程等。当用户询问公司政策、报销流程、HR 流程时使用此技能。",
+      "author": "ulanzi",
+      "version": "1.0.0",
+      "tags": [
+        "docs",
+        "internal",
+        "cn"
+      ],
+      "platforms": [
+        "claude-code",
+        "openclaw"
+      ],
+      "files": {
+        "SKILL.md": "---\nname: company-docs\ndescription: 查询公司内部文档和流程，包括HR、财务、研发流程等。当用户询问公司政策、报销流程、HR 流程时使用此技能。\nversion: 1.0.0\nauthor: ulanzi\ntags: [docs, internal, cn]\nplatforms:\n  - claude-code\n  - openclaw\n---\n\n# 公司文档助手\n\n查询优篮子公司的内部文档和流程。\n\n## 适用场景\n\n- 询问公司政策\n- 查询报销流程\n- 了解 HR 流程\n- 研发流程咨询\n- 制度文件查找\n\n## 可查询的内容\n\n### HR 流程\n\n- 入离职办理\n- 请假流程\n- 福利政策\n- 晋升机制\n\n### 财务流程\n\n- 报销标准\n- 采购流程\n- 合同审批\n- 预算申请\n\n### 研发流程\n\n- 代码规范\n- 发布流程\n- 测试规范\n- 文档规范\n\n## 使用方法\n\n直接询问即可，例如：\n\n- \"请假流程是什么？\"\n- \"如何报销差旅费？\"\n- \"代码发布流程是怎样的？\"\n\n## 注意事项\n\n- 如果不确定答案，建议用户咨询相关部门\n- 当前版本内容有限，持续更新中\n- 如有紧急问题，联系行政或 HR 同事\n",
+        "_meta.json": "{\n  \"ownerId\": \"ulanzi\",\n  \"slug\": \"company-docs\",\n  \"version\": \"1.0.0\",\n  \"publishedAt\": 1700000000000,\n  \"homepage\": \"https://github.com/ccchenhuohuo/ulanzihub-skills\",\n  \"license\": \"MIT\"\n}\n"
+      }
+    },
+    {
+      "id": "ulanzi/feishu-bot",
+      "name": "feishu-bot",
+      "displayName": "Feishu Bot",
+      "description": "开发飞书机器人和集成应用，支持消息卡片、交互组件等。当用户要求开发飞书机器人、集成飞书 API、实现消息推送时使用此技能。",
+      "author": "ulanzi",
+      "version": "1.0.0",
+      "tags": [
+        "feishu",
+        "bot",
+        "internal"
+      ],
+      "platforms": [
+        "claude-code",
+        "openclaw"
+      ],
+      "files": {
+        "SKILL.md": "---\nname: feishu-bot\ndescription: 开发飞书机器人和集成应用，支持消息卡片、交互组件等。当用户要求开发飞书机器人、集成飞书 API、实现消息推送时使用此技能。\nversion: 1.0.0\nauthor: ulanzi\ntags: [feishu, bot, internal]\nplatforms:\n  - claude-code\n  - openclaw\n---\n\n# 飞书机器人开发\n\n开发优篮子内部的飞书机器人和集成应用。\n\n## 适用场景\n\n- 开发飞书自定义机器人\n- 实现消息卡片推送\n- 集成飞书 Open API\n- 构建飞书应用\n- 自动化流程集成\n\n## 开发规范\n\n### 1. 机器人类型\n\n- 自定义机器人：用于群消息推送\n- 应用机器人：用于更复杂的交互\n\n### 2. 消息类型\n\n- 文本消息\n- 富文本消息\n- 消息卡片 (Card)\n- 交互组件\n\n### 3. 常见功能\n\n- 定时提醒\n- 审批通知\n- 数据推送\n- 人工交互\n\n## 代码示例\n\n### 发送文本消息\n\n```javascript\nconst webhook = 'https://open.feishu.cn/open-apis/bot/v2/hook/xxx';\n\nconst message = {\n  msg_type: 'text',\n  content: {\n    text: 'Hello from飞书机器人!'\n  }\n};\n\nfetch(webhook, {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify(message)\n});\n```\n\n### 发送卡片消息\n\n```javascript\nconst message = {\n  msg_type: 'interactive',\n  card: {\n    header: {\n      title: { tag: 'plain_text', content: '标题' },\n      color: 'blue'\n    },\n    elements: [\n      {\n        tag: 'div',\n        text: { tag: 'plain_text', content: '内容' }\n      },\n      {\n        tag: 'action',\n        actions: [\n          {\n            tag: 'button',\n            text: { tag: 'plain_text', content: '点击' },\n            type: 'primary',\n            url: 'https://example.com'\n          }\n        ]\n      }\n    ]\n  }\n};\n```\n\n## 注意事项\n\n- 机器人 Webhook 地址保密\n- 合理使用 API 频率限制\n- 注意消息内容合规\n- 测试环境先验证\n",
+        "_meta.json": "{\n  \"ownerId\": \"ulanzi\",\n  \"slug\": \"feishu-bot\",\n  \"version\": \"1.0.0\",\n  \"publishedAt\": 1700000000000,\n  \"homepage\": \"https://github.com/ccchenhuohuo/ulanzihub-skills\",\n  \"license\": \"MIT\"\n}\n"
+      }
+    }
+  ]
+}
