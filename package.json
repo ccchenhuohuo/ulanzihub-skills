@@ -46,6 +46,16 @@
         "name": "seedream-image-for-openclaw",
         "path": "./skills/seedream-image-for-openclaw",
         "description": "火山引擎图片生成技能"
+      },
+      {
+        "name": "doris-dim-join",
+        "path": "./skills/doris-dim-join",
+        "description": "Doris维度表与事实表JOIN，为销售数据挂载标准化分类维度"
+      },
+      {
+        "name": "skill-creator",
+        "path": "./skills/skill-creator",
+        "description": "创建和优化Claude Code Skills的完整工具链"
       }
     ]
   },

@@ -110,6 +110,8 @@ ulanzihub uninstall <技能名称>
 
 | 技能名称 | 说明 | 平台 | 版本 |
 |----------|------|------|------|
+| [doris-dim-join](#doris-dim-join) | Doris维度表与事实表JOIN | Claude Code | 1.0.0 |
+| [skill-creator](#skill-creator) | Claude Code Skill 创建与优化工具 | Claude Code | 1.0.0 |
 | [seedream-image-for-openclaw](#seedream-image-for-openclaw) | 火山引擎 Seedream 图片生成 | Claude Code | 1.0.2 |
 | [seedance-video-generation](#seedance-video-generation) | 字节跳动 Seedance 视频生成 | Claude Code | 1.0.2 |
 | [humanizer-zh](#humanizer-zh) | 去除 AI 写作痕迹 | Claude Code | - |
@@ -119,6 +121,36 @@ ulanzihub uninstall <技能名称>
 ---
 
 ### 技能详细介绍
+
+#### 🗄️ doris-dim-join
+
+Doris 维度表与事实表 JOIN 技能，为销售数据挂载标准化分类维度。
+
+**功能：**
+- CSV 数据合并与处理
+- StreamLoad 批量导入 Doris
+- 维度表与事实表 JOIN（CN/US/JP/DE 站点）
+- 结果验证与报告
+
+**触发词：** dim表JOIN、维度表挂载、stdcategory、product_category_dimension
+
+**注意：** 必须使用此 skill 完成维度表 JOIN，不要自行编写 SQL。
+
+---
+
+#### 🛠️ skill-creator
+
+Claude Code Skill 创建与优化工具。
+
+**功能：**
+- 从零创建新 Skill
+- 迭代优化现有 Skill
+- 运行测试用例评估 Skill 效果
+- 优化 Skill 描述以提高触发准确性
+
+**触发词：** 创建 skill、优化 skill、skill 评估
+
+---
 
 #### 🌄 seedream-image-for-openclaw
 

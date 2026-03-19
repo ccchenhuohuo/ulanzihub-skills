@@ -1,0 +1,7 @@
+{
+  "name": "doris-dim-join",
+  "description": "Doris维度表与事实表JOIN，为销售数据挂载标准化分类维度",
+  "version": "1.0.0",
+  "author": "ccchenhuohuo",
+  "source": "ulanzihub-skills"
+}
